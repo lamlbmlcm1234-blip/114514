@@ -1,0 +1,1446 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>碳酸锂供需跟踪 - 静态样式预览</title>
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --card: #ffffff;
+        --border: #e2e8f0;
+        --text: #0f172a;
+        --muted: #64748b;
+        --brand: #047857;
+        --brand-soft: #ecfdf5;
+        --blue: #eff6ff;
+        --blue-text: #1d4ed8;
+        --orange: #fff7ed;
+        --orange-text: #c2410c;
+        --red: #fef2f2;
+        --red-text: #b91c1c;
+        --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+        background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+        color: var(--text);
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.92);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(12px);
+      }
+
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      .topbar-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 16px 0;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #065f46, #10b981);
+        color: #fff;
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        box-shadow: var(--shadow);
+      }
+
+      .brand-title {
+        font-size: 20px;
+        font-weight: 800;
+        margin: 0;
+      }
+
+      .brand-subtitle {
+        margin: 4px 0 0;
+        font-size: 12px;
+        color: var(--muted);
+        letter-spacing: 0.08em;
+      }
+
+      .nav {
+        display: flex;
+        gap: 8px;
+        background: #f1f5f9;
+        padding: 6px;
+        border-radius: 14px;
+        flex-wrap: wrap;
+      }
+
+      .nav a {
+        text-decoration: none;
+        color: #475569;
+        padding: 10px 14px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .nav a.active {
+        background: #fff;
+        color: var(--brand);
+        box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+      }
+
+      .page {
+        padding: 28px 0 40px;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.6fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .hero-main {
+        padding: 28px;
+        background:
+          radial-gradient(circle at top right, rgba(16, 185, 129, 0.14), transparent 30%),
+          linear-gradient(135deg, #ffffff, #f8fafc);
+      }
+
+      .hero-title {
+        margin: 0;
+        font-size: 34px;
+        line-height: 1.2;
+      }
+
+      .hero-desc {
+        margin: 14px 0 22px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .tag-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        background: var(--brand-soft);
+        color: var(--brand);
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .hero-side {
+        padding: 24px;
+      }
+
+      .kpi-title {
+        margin: 0 0 16px;
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .kpi {
+        border-radius: 18px;
+        padding: 16px;
+        border: 1px solid var(--border);
+      }
+
+      .kpi:nth-child(1) {
+        background: var(--brand-soft);
+      }
+
+      .kpi:nth-child(2) {
+        background: var(--blue);
+      }
+
+      .kpi:nth-child(3) {
+        background: var(--orange);
+      }
+
+      .kpi:nth-child(4) {
+        background: var(--red);
+      }
+
+      .kpi-label {
+        color: var(--muted);
+        font-size: 12px;
+        margin-bottom: 8px;
+      }
+
+      .kpi-value {
+        font-size: 28px;
+        font-weight: 800;
+      }
+
+      .kpi-note {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .section-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .panel {
+        padding: 24px;
+      }
+
+      .panel-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .panel-title {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      .panel-subtitle {
+        margin: 6px 0 0;
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .pill {
+        border: 1px solid var(--border);
+        background: #fff;
+        color: #475569;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .chart-box {
+        border: 1px solid var(--border);
+        background: linear-gradient(180deg, #ffffff, #f8fafc);
+        border-radius: 20px;
+        padding: 20px;
+      }
+
+      .chart {
+        position: relative;
+        height: 280px;
+        border-radius: 16px;
+        overflow: hidden;
+        background:
+          linear-gradient(to top, rgba(226, 232, 240, 0.75) 1px, transparent 1px) 0 0 / 100% 56px,
+          linear-gradient(to right, rgba(226, 232, 240, 0.55) 1px, transparent 1px) 0 0 / 20% 100%;
+      }
+
+      .bars {
+        position: absolute;
+        left: 26px;
+        right: 26px;
+        bottom: 34px;
+        top: 18px;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .bar-group {
+        flex: 1;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .bar {
+        width: 18px;
+        border-radius: 10px 10px 0 0;
+      }
+
+      .bar.demand {
+        background: linear-gradient(180deg, #3b82f6, #1d4ed8);
+      }
+
+      .bar.supply {
+        background: linear-gradient(180deg, #34d399, #059669);
+      }
+
+      .line {
+        position: absolute;
+        left: 26px;
+        right: 26px;
+        top: 94px;
+        height: 0;
+        border-top: 3px solid #ef4444;
+        border-radius: 999px;
+      }
+
+      .line::before {
+        content: "";
+        position: absolute;
+        inset: -70px 0 auto 0;
+        height: 140px;
+        background: linear-gradient(180deg, rgba(239, 68, 68, 0.14), rgba(239, 68, 68, 0));
+        clip-path: polygon(0 60%, 14% 45%, 30% 52%, 46% 30%, 62% 38%, 78% 18%, 100% 8%, 100% 100%, 0 100%);
+      }
+
+      .line::after {
+        content: "";
+        position: absolute;
+        inset: -72px 0 auto 0;
+        height: 140px;
+        border-top: 4px solid #ef4444;
+        clip-path: polygon(0 60%, 14% 45%, 30% 52%, 46% 30%, 62% 38%, 78% 18%, 100% 8%);
+      }
+
+      .axis-labels {
+        margin-top: 12px;
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .alert-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .alert-item {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 16px;
+        background: #fff;
+      }
+
+      .alert-item.high {
+        background: linear-gradient(180deg, #fff7ed, #ffffff);
+      }
+
+      .alert-item.medium {
+        background: linear-gradient(180deg, #eff6ff, #ffffff);
+      }
+
+      .alert-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .alert-name {
+        font-weight: 800;
+        margin: 0;
+      }
+
+      .alert-meta {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .badge {
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .badge.high {
+        background: #ffedd5;
+        color: var(--orange-text);
+      }
+
+      .badge.medium {
+        background: #dbeafe;
+        color: var(--blue-text);
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .summary-card {
+        padding: 22px;
+      }
+
+      .summary-card.good {
+        background: linear-gradient(135deg, #ecfdf5, #ffffff);
+      }
+
+      .summary-card.warn {
+        background: linear-gradient(135deg, #fff7ed, #ffffff);
+      }
+
+      .summary-card.risk {
+        background: linear-gradient(135deg, #fef2f2, #ffffff);
+      }
+
+      .summary-number {
+        font-size: 40px;
+        font-weight: 800;
+        margin: 8px 0 4px;
+      }
+
+      .chain-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+
+      .chain-column {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
+        background: #fff;
+      }
+
+      .chain-head {
+        padding: 12px 14px;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .chain-head.upstream {
+        background: #047857;
+      }
+
+      .chain-head.midstream {
+        background: #2563eb;
+      }
+
+      .chain-head.downstream {
+        background: #7c3aed;
+      }
+
+      .chain-head.terminal {
+        background: #ea580c;
+      }
+
+      .chain-body {
+        padding: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .node {
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 12px;
+        background: #f8fafc;
+      }
+
+      .node-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      .status {
+        font-size: 11px;
+        font-weight: 800;
+        padding: 4px 8px;
+        border-radius: 999px;
+      }
+
+      .status.good {
+        background: #dcfce7;
+        color: #15803d;
+      }
+
+      .status.mid {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+
+      .status.bad {
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+
+      .node-desc {
+        margin: 0;
+        font-size: 12px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .footer-note {
+        text-align: center;
+        color: var(--muted);
+        font-size: 12px;
+        padding-top: 8px;
+      }
+
+      .section-block {
+        margin-bottom: 20px;
+        scroll-margin-top: 90px;
+      }
+
+      .cards-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+
+      .cards-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .info-card {
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 18px;
+        background: #fff;
+      }
+
+      .info-card.soft-green {
+        background: linear-gradient(135deg, #ecfdf5, #ffffff);
+      }
+
+      .info-card.soft-blue {
+        background: linear-gradient(135deg, #eff6ff, #ffffff);
+      }
+
+      .info-card.soft-orange {
+        background: linear-gradient(135deg, #fff7ed, #ffffff);
+      }
+
+      .info-card.soft-red {
+        background: linear-gradient(135deg, #fef2f2, #ffffff);
+      }
+
+      .card-kicker {
+        font-size: 12px;
+        color: var(--muted);
+        letter-spacing: 0.04em;
+        margin-bottom: 8px;
+      }
+
+      .card-title {
+        margin: 0 0 8px;
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .card-text {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+
+      .metric-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 14px;
+      }
+
+      .metric-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 7px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid var(--border);
+        background: #fff;
+        color: #334155;
+      }
+
+      .cost-layout {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 20px;
+      }
+
+      .curve-box {
+        height: 300px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background:
+          linear-gradient(to top, rgba(226, 232, 240, 0.75) 1px, transparent 1px) 0 0 / 100% 50px,
+          linear-gradient(to right, rgba(226, 232, 240, 0.55) 1px, transparent 1px) 0 0 / 16.6% 100%,
+          linear-gradient(180deg, #ffffff, #f8fafc);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .curve-bars {
+        position: absolute;
+        left: 22px;
+        right: 22px;
+        bottom: 32px;
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+      }
+
+      .curve-bar {
+        flex: 1;
+        border-radius: 12px 12px 0 0;
+        position: relative;
+      }
+
+      .curve-bar.low {
+        background: linear-gradient(180deg, #86efac, #16a34a);
+      }
+
+      .curve-bar.mid {
+        background: linear-gradient(180deg, #93c5fd, #2563eb);
+      }
+
+      .curve-bar.high {
+        background: linear-gradient(180deg, #fdba74, #ea580c);
+      }
+
+      .curve-bar.risk {
+        background: linear-gradient(180deg, #fca5a5, #dc2626);
+      }
+
+      .curve-line {
+        position: absolute;
+        left: 20px;
+        right: 20px;
+        top: 110px;
+        border-top: 2px dashed #dc2626;
+      }
+
+      .curve-label {
+        position: absolute;
+        right: 18px;
+        top: 90px;
+        font-size: 12px;
+        font-weight: 700;
+        color: #dc2626;
+        background: rgba(255, 255, 255, 0.88);
+        padding: 4px 8px;
+        border-radius: 999px;
+      }
+
+      .curve-axis {
+        position: absolute;
+        left: 22px;
+        right: 22px;
+        bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .forecast-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+
+      .forecast-card {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 16px;
+        background: #fff;
+      }
+
+      .forecast-card.bullish {
+        background: linear-gradient(135deg, #ecfdf5, #ffffff);
+      }
+
+      .forecast-card.neutral {
+        background: linear-gradient(135deg, #eff6ff, #ffffff);
+      }
+
+      .forecast-card.bearish {
+        background: linear-gradient(135deg, #fff7ed, #ffffff);
+      }
+
+      .forecast-name {
+        margin: 0 0 6px;
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      .forecast-meta {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+
+      .kv {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 13px;
+        padding: 6px 0;
+        border-bottom: 1px dashed #e2e8f0;
+      }
+
+      .kv:last-child {
+        border-bottom: 0;
+      }
+
+      .segment-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .segment-card {
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 16px;
+        background: #fff;
+      }
+
+      .segment-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .segment-name {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 800;
+      }
+
+      .small-muted {
+        margin: 4px 0 0;
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .mini-bars {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+        height: 92px;
+        margin: 12px 0 10px;
+      }
+
+      .mini-bars span {
+        flex: 1;
+        display: block;
+        border-radius: 10px 10px 0 0;
+      }
+
+      .mini-bars.orange span {
+        background: linear-gradient(180deg, #fdba74, #ea580c);
+      }
+
+      .mini-bars.blue span {
+        background: linear-gradient(180deg, #93c5fd, #2563eb);
+      }
+
+      .list {
+        margin: 10px 0 0;
+        padding-left: 18px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+
+      .timeline-item {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 14px;
+        background: #fff;
+      }
+
+      .timeline-date {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--brand);
+        margin-bottom: 8px;
+      }
+
+      code {
+        background: #eef2ff;
+        color: #3730a3;
+        padding: 2px 6px;
+        border-radius: 6px;
+        font-family: Consolas, monospace;
+        font-size: 12px;
+      }
+
+      @media (max-width: 1024px) {
+        .hero,
+        .section-grid,
+        .summary-grid,
+        .chain-grid,
+        .cards-3,
+        .cards-2,
+        .cost-layout,
+        .forecast-grid,
+        .segment-grid,
+        .timeline {
+          grid-template-columns: 1fr;
+        }
+
+        .topbar-inner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          padding: 0 14px;
+        }
+
+        .hero-main,
+        .hero-side,
+        .panel,
+        .summary-card {
+          padding: 18px;
+        }
+
+        .hero-title {
+          font-size: 28px;
+        }
+
+        .kpi-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <div class="brand">
+          <div class="brand-icon">Li</div>
+          <div>
+            <h1 class="brand-title">碳酸锂供需格局跟踪</h1>
+            <p class="brand-subtitle">STATIC STYLE PREVIEW</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="#overview" class="active">总览</a>
+          <a href="#chain">产业链</a>
+          <a href="#investment">投资</a>
+          <a href="#cost">成本</a>
+          <a href="#forecast">机构</a>
+          <a href="#demand">需求端</a>
+          <a href="#supply">供给端</a>
+          <a href="#alerts">动态</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="page">
+      <div class="container">
+        <section id="overview" class="hero section-block">
+          <div class="card hero-main">
+            <h2 class="hero-title">全球锂资源供需实时跟踪系统</h2>
+            <p class="hero-desc">
+              这是一个独立静态 HTML 样式稿，不依赖 React、Node 或 Vite。双击文件即可打开，
+              适合你先拿去看页面风格、配色、卡片层级和信息排版效果。
+            </p>
+            <div class="tag-row">
+              <span class="tag">总览面板</span>
+              <span class="tag">产业链卡片</span>
+              <span class="tag">价格趋势区</span>
+              <span class="tag">预警信息流</span>
+            </div>
+          </div>
+
+          <aside class="card hero-side">
+            <h3 class="kpi-title">核心指标</h3>
+            <div class="kpi-grid">
+              <div class="kpi">
+                <div class="kpi-label">2026E 需求</div>
+                <div class="kpi-value">215</div>
+                <div class="kpi-note">万吨 LCE</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">2026E 供给</div>
+                <div class="kpi-value">203</div>
+                <div class="kpi-note">万吨 LCE</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">供需缺口</div>
+                <div class="kpi-value">-12</div>
+                <div class="kpi-note">紧平衡转短缺</div>
+              </div>
+              <div class="kpi">
+                <div class="kpi-label">现货价格</div>
+                <div class="kpi-value">17</div>
+                <div class="kpi-note">万元 / 吨</div>
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <section class="section-grid section-block">
+          <div class="card panel">
+            <div class="panel-header">
+              <div>
+                <h3 class="panel-title">供需平衡与价格趋势</h3>
+                <p class="panel-subtitle">用占位图模拟原项目中的图表风格和布局比例</p>
+              </div>
+              <span class="pill">2025-2028E</span>
+            </div>
+            <div class="chart-box">
+              <div class="chart">
+                <div class="line"></div>
+                <div class="bars">
+                  <div class="bar-group">
+                    <div class="bar demand" style="height: 130px;"></div>
+                    <div class="bar supply" style="height: 150px;"></div>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar demand" style="height: 155px;"></div>
+                    <div class="bar supply" style="height: 162px;"></div>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar demand" style="height: 190px;"></div>
+                    <div class="bar supply" style="height: 176px;"></div>
+                  </div>
+                  <div class="bar-group">
+                    <div class="bar demand" style="height: 228px;"></div>
+                    <div class="bar supply" style="height: 198px;"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="axis-labels">
+                <span>2025</span>
+                <span>2026E</span>
+                <span>2027E</span>
+                <span>2028E</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card panel">
+            <div class="panel-header">
+              <div>
+                <h3 class="panel-title">最新动态</h3>
+                <p class="panel-subtitle">右侧信息流样式预览</p>
+              </div>
+              <span class="pill">3 条高优先级</span>
+            </div>
+            <div class="alert-list">
+              <article class="alert-item high">
+                <div class="alert-top">
+                  <div>
+                    <p class="alert-name">津巴布韦出口配额继续收紧</p>
+                    <p class="alert-meta">供给端 · 2026-04-26</p>
+                  </div>
+                  <span class="badge high">高影响</span>
+                </div>
+                <div class="alert-meta">非洲锂矿贸易流受扰动，短期供给弹性被压制。</div>
+              </article>
+
+              <article class="alert-item medium">
+                <div class="alert-top">
+                  <div>
+                    <p class="alert-name">储能电池需求维持高景气</p>
+                    <p class="alert-meta">需求端 · 2026-04-24</p>
+                  </div>
+                  <span class="badge medium">中影响</span>
+                </div>
+                <div class="alert-meta">大储和 AIDC 储能继续成为中期增量主线。</div>
+              </article>
+
+              <article class="alert-item">
+                <div class="alert-top">
+                  <div>
+                    <p class="alert-name">锂价站稳 17 万元 / 吨区间</p>
+                    <p class="alert-meta">价格 · 2026-04-22</p>
+                  </div>
+                  <span class="badge medium">中影响</span>
+                </div>
+                <div class="alert-meta">高成本产能利润边际改善，但新增供给释放仍然偏慢。</div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="summary-grid section-block">
+          <div class="card summary-card good">
+            <div class="kpi-label">格局向好环节</div>
+            <div class="summary-number" style="color: #047857;">8</div>
+            <div class="panel-subtitle">低成本锂矿、储能电池、海外资源与回收体系</div>
+          </div>
+          <div class="card summary-card warn">
+            <div class="kpi-label">政策敏感环节</div>
+            <div class="summary-number" style="color: #c2410c;">4</div>
+            <div class="panel-subtitle">非洲锂矿、北美本土化、用户侧储能、电网侧储能</div>
+          </div>
+          <div class="card summary-card risk">
+            <div class="kpi-label">过剩承压环节</div>
+            <div class="summary-number" style="color: #b91c1c;">3</div>
+            <div class="panel-subtitle">电解液、负极材料、部分传统中游加工环节</div>
+          </div>
+        </section>
+
+        <section id="chain" class="card panel section-block">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">产业链样式预览</h3>
+              <p class="panel-subtitle">用卡片列展示上游、中游、下游与终端的视觉层次</p>
+            </div>
+            <span class="pill">静态展示版</span>
+          </div>
+
+          <div class="chain-grid">
+            <div class="chain-column">
+              <div class="chain-head upstream">上游资源</div>
+              <div class="chain-body">
+                <div class="node">
+                  <div class="node-title">
+                    <span>盐湖提锂</span>
+                    <span class="status good">优秀</span>
+                  </div>
+                  <p class="node-desc">成本低、扩产慢、盈利稳定，是最具防守性的资源端环节。</p>
+                </div>
+                <div class="node">
+                  <div class="node-title">
+                    <span>锂辉石矿</span>
+                    <span class="status good">良好</span>
+                  </div>
+                  <p class="node-desc">澳洲主导供给，弹性强，短期仍是全球供给主力来源。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="chain-column">
+              <div class="chain-head midstream">中游材料</div>
+              <div class="chain-body">
+                <div class="node">
+                  <div class="node-title">
+                    <span>磷酸铁锂</span>
+                    <span class="status bad">过剩</span>
+                  </div>
+                  <p class="node-desc">供给扩张过快，加工费承压，行业内卷显著。</p>
+                </div>
+                <div class="node">
+                  <div class="node-title">
+                    <span>隔膜</span>
+                    <span class="status mid">中等</span>
+                  </div>
+                  <p class="node-desc">格局相对较好，但价格博弈仍存在。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="chain-column">
+              <div class="chain-head downstream">下游电池</div>
+              <div class="chain-body">
+                <div class="node">
+                  <div class="node-title">
+                    <span>储能电池</span>
+                    <span class="status good">成长</span>
+                  </div>
+                  <p class="node-desc">海外大储与数据中心储能打开新增量，景气度持续提升。</p>
+                </div>
+                <div class="node">
+                  <div class="node-title">
+                    <span>动力电池</span>
+                    <span class="status mid">稳定</span>
+                  </div>
+                  <p class="node-desc">规模大、竞争强，盈利韧性强于二线厂商。</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="chain-column">
+              <div class="chain-head terminal">终端应用</div>
+              <div class="chain-body">
+                <div class="node">
+                  <div class="node-title">
+                    <span>新能源汽车</span>
+                    <span class="status good">成长</span>
+                  </div>
+                  <p class="node-desc">仍是最大需求池，但增速逐步换挡，海外市场贡献更大。</p>
+                </div>
+                <div class="node">
+                  <div class="node-title">
+                    <span>AIDC 储能</span>
+                    <span class="status good">爆发</span>
+                  </div>
+                  <p class="node-desc">高弹性主题，用于突出科技基础设施带来的锂需求扩张。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="investment" class="card panel section-block">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">投资分析</h3>
+              <p class="panel-subtitle">把正式项目里的梯队分析压缩成适合展示的单页卡片版</p>
+            </div>
+            <span class="pill">四梯队逻辑</span>
+          </div>
+          <div class="cards-3">
+            <article class="info-card soft-green">
+              <div class="card-kicker">第一梯队</div>
+              <h4 class="card-title">盐湖股份 / 天齐锂业</h4>
+              <p class="card-text">低成本资源端最能直接受益于锂价中枢上移，利润弹性和确定性兼具。</p>
+              <div class="metric-row">
+                <span class="metric-chip">低成本</span>
+                <span class="metric-chip">资源壁垒</span>
+                <span class="metric-chip">高弹性</span>
+              </div>
+            </article>
+            <article class="info-card soft-blue">
+              <div class="card-kicker">第二梯队</div>
+              <h4 class="card-title">宁德时代 / 恩捷股份</h4>
+              <p class="card-text">龙头格局稳、出海强、盈利质量高，更适合在景气上行阶段做中枢配置。</p>
+              <div class="metric-row">
+                <span class="metric-chip">龙头优势</span>
+                <span class="metric-chip">出海扩张</span>
+                <span class="metric-chip">盈利稳定</span>
+              </div>
+            </article>
+            <article class="info-card soft-red">
+              <div class="card-kicker">回避方向</div>
+              <h4 class="card-title">电解液 / 负极材料</h4>
+              <p class="card-text">供给扩张快于需求修复，价格战尚未结束，盈利改善节奏偏慢。</p>
+              <div class="metric-row">
+                <span class="metric-chip">产能过剩</span>
+                <span class="metric-chip">加工费承压</span>
+                <span class="metric-chip">竞争激烈</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="cost" class="card panel section-block">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">成本曲线</h3>
+              <p class="panel-subtitle">单文件静态版用彩色柱体模拟不同供给来源的成本区间和现价参考线</p>
+            </div>
+            <span class="pill">现价 17 万元 / 吨</span>
+          </div>
+          <div class="cost-layout">
+            <div class="curve-box">
+              <div class="curve-line"></div>
+              <div class="curve-label">现价参考线</div>
+              <div class="curve-bars">
+                <div class="curve-bar low" style="height: 70px;"></div>
+                <div class="curve-bar low" style="height: 92px;"></div>
+                <div class="curve-bar mid" style="height: 120px;"></div>
+                <div class="curve-bar mid" style="height: 146px;"></div>
+                <div class="curve-bar high" style="height: 178px;"></div>
+                <div class="curve-bar risk" style="height: 208px;"></div>
+              </div>
+              <div class="curve-axis">
+                <span>盐湖</span>
+                <span>锂辉石</span>
+                <span>回收</span>
+                <span>非洲矿</span>
+                <span>锂云母</span>
+                <span>海水提锂</span>
+              </div>
+            </div>
+            <div class="cards-1">
+              <div class="info-card soft-green">
+                <div class="card-kicker">低成本区</div>
+                <h4 class="card-title">盐湖提锂</h4>
+                <p class="card-text">成本底部最稳，是行业利润的压舱石。</p>
+              </div>
+              <div class="info-card soft-orange" style="margin-top: 16px;">
+                <div class="card-kicker">边际供给</div>
+                <h4 class="card-title">锂云母 / 非洲锂矿</h4>
+                <p class="card-text">现价上行后盈利修复明显，但供给释放仍受政策和复产节奏扰动。</p>
+              </div>
+              <div class="info-card soft-red" style="margin-top: 16px;">
+                <div class="card-kicker">高风险区</div>
+                <h4 class="card-title">试验性高成本路线</h4>
+                <p class="card-text">更适合做技术展望，不适合作为中期供给主假设。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="forecast" class="card panel section-block">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">机构预测</h3>
+              <p class="panel-subtitle">静态版保留多机构对比的视觉逻辑，适合展示观点分歧</p>
+            </div>
+            <span class="pill">2026E 对比</span>
+          </div>
+          <div class="forecast-grid">
+            <article class="forecast-card bullish">
+              <h4 class="forecast-name">UBS</h4>
+              <div class="forecast-meta">看多 · 储能需求超预期</div>
+              <div class="kv"><span>需求</span><strong>215 万吨</strong></div>
+              <div class="kv"><span>供给</span><strong>192 万吨</strong></div>
+              <div class="kv"><span>平衡</span><strong>-23 万吨</strong></div>
+              <div class="kv"><span>价格中枢</span><strong>24k-28k USD</strong></div>
+            </article>
+            <article class="forecast-card neutral">
+              <h4 class="forecast-name">Morgan Stanley</h4>
+              <div class="forecast-meta">中性 · 对复产更乐观</div>
+              <div class="kv"><span>需求</span><strong>200 万吨</strong></div>
+              <div class="kv"><span>供给</span><strong>192 万吨</strong></div>
+              <div class="kv"><span>平衡</span><strong>-8 万吨</strong></div>
+              <div class="kv"><span>价格中枢</span><strong>11k-28k USD</strong></div>
+            </article>
+            <article class="forecast-card bearish">
+              <h4 class="forecast-name">华泰证券</h4>
+              <div class="forecast-meta">偏谨慎 · 预计供给偏宽松</div>
+              <div class="kv"><span>需求</span><strong>215 万吨</strong></div>
+              <div class="kv"><span>供给</span><strong>216.2 万吨</strong></div>
+              <div class="kv"><span>平衡</span><strong>+1.2 万吨</strong></div>
+              <div class="kv"><span>价格中枢</span><strong>8-9 万元</strong></div>
+            </article>
+          </div>
+        </section>
+
+        <section id="demand" class="card panel section-block">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">需求端</h3>
+              <p class="panel-subtitle">保留高增长分项和条形趋势的展示感，适合用来讲故事线</p>
+            </div>
+            <span class="pill">2025 → 2028E</span>
+          </div>
+          <div class="segment-grid">
+            <article class="segment-card">
+              <div class="segment-head">
+                <div>
+                  <h4 class="segment-name">动力电池</h4>
+                  <p class="small-muted">新能源汽车仍是最大需求池</p>
+                </div>
+                <span class="metric-chip">240 万吨</span>
+              </div>
+              <div class="mini-bars orange">
+                <span style="height: 42px;"></span>
+                <span style="height: 55px;"></span>
+                <span style="height: 72px;"></span>
+                <span style="height: 88px;"></span>
+              </div>
+              <p class="card-text">国内增速换挡，但海外渗透率提升和车型扩张继续支撑中期增长。</p>
+            </article>
+            <article class="segment-card">
+              <div class="segment-head">
+                <div>
+                  <h4 class="segment-name">储能电池</h4>
+                  <p class="small-muted">最强超预期来源</p>
+                </div>
+                <span class="metric-chip">95 万吨</span>
+              </div>
+              <div class="mini-bars orange">
+                <span style="height: 26px;"></span>
+                <span style="height: 40px;"></span>
+                <span style="height: 62px;"></span>
+                <span style="height: 86px;"></span>
+              </div>
+              <p class="card-text">海外大储、电网侧储能和 AIDC 储能共同抬升未来三年的景气中枢。</p>
+            </article>
+            <article class="segment-card">
+              <div class="segment-head">
+                <div>
+                  <h4 class="segment-name">电动重卡</h4>
+                  <p class="small-muted">政策驱动弹性方向</p>
+                </div>
+                <span class="metric-chip">20 万吨</span>
+              </div>
+              <ul class="list">
+                <li>补贴和换电模式继续推动电动化率上行</li>
+                <li>单车带电量大，边际锂耗更敏感</li>
+              </ul>
+            </article>
+            <article class="segment-card">
+              <div class="segment-head">
+                <div>
+                  <h4 class="segment-name">AIDC 储能</h4>
+                  <p class="small-muted">科技主题带来的新增量</p>
+                </div>
+                <span class="metric-chip">6 万吨</span>
+              </div>
+              <ul class="list">
+                <li>体量不大，但增速和市场关注度最高</li>
+                <li>更适合做预期差与主题展示</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="supply" class="card panel section-block">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">供给端</h3>
+              <p class="panel-subtitle">用静态卡片展示供给来源、成本区间与扩产节奏</p>
+            </div>
+            <span class="pill">成本区间视角</span>
+          </div>
+          <div class="segment-grid">
+            <article class="segment-card">
+              <div class="segment-head">
+                <div>
+                  <h4 class="segment-name">盐湖提锂</h4>
+                  <p class="small-muted">成本最低，扩产慢</p>
+                </div>
+                <span class="metric-chip">3-5 万元/吨</span>
+              </div>
+              <div class="mini-bars blue">
+                <span style="height: 44px;"></span>
+                <span style="height: 54px;"></span>
+                <span style="height: 64px;"></span>
+                <span style="height: 78px;"></span>
+              </div>
+              <p class="card-text">供给稳定性强，最适合作为行业底部成本锚。</p>
+            </article>
+            <article class="segment-card">
+              <div class="segment-head">
+                <div>
+                  <h4 class="segment-name">锂辉石矿</h4>
+                  <p class="small-muted">全球供给主力</p>
+                </div>
+                <span class="metric-chip">5-8 万元/吨</span>
+              </div>
+              <div class="mini-bars blue">
+                <span style="height: 56px;"></span>
+                <span style="height: 64px;"></span>
+                <span style="height: 76px;"></span>
+                <span style="height: 88px;"></span>
+              </div>
+              <p class="card-text">弹性强，复产节奏和棕地扩产决定阶段性供给斜率。</p>
+            </article>
+            <article class="segment-card">
+              <div class="segment-head">
+                <div>
+                  <h4 class="segment-name">非洲锂矿</h4>
+                  <p class="small-muted">资源优异，政策扰动大</p>
+                </div>
+                <span class="metric-chip">6-9 万元/吨</span>
+              </div>
+              <ul class="list">
+                <li>津巴布韦出口政策扰动贸易流</li>
+                <li>中资主导开发，但落地节奏受政策影响</li>
+              </ul>
+            </article>
+            <article class="segment-card">
+              <div class="segment-head">
+                <div>
+                  <h4 class="segment-name">锂云母</h4>
+                  <p class="small-muted">高成本、弹性受限</p>
+                </div>
+                <span class="metric-chip">8-12 万元/吨</span>
+              </div>
+              <ul class="list">
+                <li>现价修复后盈利改善，但不是最优供给方向</li>
+                <li>环保和采矿证约束影响更大</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section id="alerts" class="card panel section-block">
+          <div class="panel-header">
+            <div>
+              <h3 class="panel-title">动态时间线</h3>
+              <p class="panel-subtitle">把“动态”单独做成一段，方便你演示信息流和更新节奏</p>
+            </div>
+            <span class="pill">最近更新</span>
+          </div>
+          <div class="timeline">
+            <article class="timeline-item">
+              <div class="timeline-date">2026-04-26</div>
+              <h4 class="card-title" style="font-size: 15px;">出口配额继续收紧</h4>
+              <p class="card-text">非洲锂矿外运受限，市场对供给弹性的定价提升。</p>
+            </article>
+            <article class="timeline-item">
+              <div class="timeline-date">2026-04-24</div>
+              <h4 class="card-title" style="font-size: 15px;">储能延续高景气</h4>
+              <p class="card-text">海外大储和 AIDC 项目成为未来两年的核心增量。</p>
+            </article>
+            <article class="timeline-item">
+              <div class="timeline-date">2026-04-22</div>
+              <h4 class="card-title" style="font-size: 15px;">锂价维持高位震荡</h4>
+              <p class="card-text">当前价格足以修复多数边际项目利润，但新增供给释放依然偏慢。</p>
+            </article>
+            <article class="timeline-item">
+              <div class="timeline-date">2026-04-18</div>
+              <h4 class="card-title" style="font-size: 15px;">北美项目推进加快</h4>
+              <p class="card-text">政策驱动继续强化本土供应链建设，但经济性仍弱于成熟矿山。</p>
+            </article>
+          </div>
+        </section>
+
+        <div class="footer-note">
+          当前文件为静态长页展示稿：<code>preview-demo.html</code>。已拼入总览、产业链、投资、成本、机构、需求端、供给端与动态模块。
+        </div>
+      </div>
+    </main>
+  </body>
+  </html>

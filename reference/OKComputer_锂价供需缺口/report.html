@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全球新能源锂电产业链深度分析报告</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== 基础重置 ===== */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Serif SC", Georgia, serif;
+    font-size: 11pt;
+    line-height: 1.7;
+    color: #333;
+    text-align: justify;
+    text-align-last: left;
+}
+
+/* ===== 页面设置 ===== */
+@page {
+    size: A4;
+    margin: 2.5cm 2cm;
+    @top-center { content: string(doctitle); font-size: 9pt; color: #666; }
+    @bottom-center { content: counter(page); font-size: 9pt; color: #666; }
+}
+@page :first { margin: 0; @top-center { content: none; } @bottom-center { content: none; } }
+@page cover { @top-center { content: none; } @bottom-center { content: none; } }
+@page toc { @top-center { content: none; } @bottom-center { content: none; } }
+
+body { string-set: doctitle ""; }
+h1 { string-set: doctitle content(); }
+
+/* ===== 封面 ===== */
+.cover {
+    width: 210mm;
+    height: 297mm;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    page: cover;
+    page-break-after: always;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+}
+.cover::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(46,125,50,0.15) 0%, transparent 70%);
+}
+.cover::after {
+    content: "";
+    position: absolute;
+    bottom: -80px;
+    left: -80px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(21,101,192,0.12) 0%, transparent 70%);
+}
+.cover-decoration-1 {
+    position: absolute;
+    top: 60px;
+    left: 40px;
+    width: 80px;
+    height: 4px;
+    background: #2E7D32;
+}
+.cover-decoration-2 {
+    position: absolute;
+    top: 75px;
+    left: 40px;
+    width: 50px;
+    height: 4px;
+    background: #1565C0;
+}
+.cover-decoration-3 {
+    position: absolute;
+    bottom: 100px;
+    right: 40px;
+    width: 120px;
+    height: 120px;
+    border: 3px solid rgba(46,125,50,0.2);
+    border-radius: 50%;
+}
+.cover-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 80%;
+    z-index: 1;
+}
+.cover-label {
+    font-size: 12pt;
+    color: #666;
+    letter-spacing: 0.3em;
+    margin-bottom: 2cm;
+}
+.cover-title {
+    font-size: 32pt;
+    font-weight: 700;
+    color: #1B5E20;
+    margin-bottom: 0.8cm;
+    line-height: 1.3;
+}
+.cover-subtitle {
+    font-size: 16pt;
+    color: #1565C0;
+    margin-bottom: 3cm;
+    font-weight: 600;
+}
+.cover-meta {
+    font-size: 11pt;
+    color: #555;
+    line-height: 2.2;
+}
+
+/* ===== 目录 ===== */
+.toc-page {
+    page: toc;
+    page-break-after: always;
+}
+.toc-title {
+    font-size: 20pt;
+    font-weight: 700;
+    color: #1B5E20;
+    margin-bottom: 1.5cm;
+    text-align: center;
+}
+.toc { list-style: none; padding: 0; margin: 0; }
+.toc li { margin: 0.4em 0; }
+.toc a {
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    align-items: baseline;
+}
+.toc a::after {
+    content: leader('.') target-counter(attr(href url), page);
+    flex: 1;
+    text-align: right;
+    margin-left: 0.5em;
+}
+.toc .toc-h1 { font-weight: 700; font-size: 12pt; margin-top: 0.8em; }
+.toc .toc-h2 { padding-left: 1.5em; font-size: 11pt; }
+.toc .toc-h3 { padding-left: 3em; font-size: 10pt; color: #555; }
+
+/* ===== 标题 ===== */
+h1 {
+    font-size: 20pt;
+    font-weight: 700;
+    color: #1B5E20;
+    margin-top: 1.5cm;
+    margin-bottom: 0.8cm;
+    page-break-after: avoid;
+    border-bottom: 2px solid #2E7D32;
+    padding-bottom: 0.3cm;
+}
+h2 {
+    font-size: 15pt;
+    font-weight: 600;
+    color: #1565C0;
+    margin-top: 1cm;
+    margin-bottom: 0.5cm;
+    page-break-after: avoid;
+}
+h3 {
+    font-size: 13pt;
+    font-weight: 600;
+    color: #333;
+    margin-top: 0.8cm;
+    margin-bottom: 0.4cm;
+    page-break-after: avoid;
+}
+
+/* ===== 表格 ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    font-size: 10pt;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+thead { border-top: 2px solid #333; border-bottom: 1.5px solid #333; }
+tbody { border-bottom: 2px solid #333; }
+th, td { padding: 6px 8px; text-align: left; vertical-align: top; }
+th { font-weight: 600; background: #f8f9fa; }
+tr { page-break-inside: avoid; }
+caption { font-weight: 600; margin-bottom: 0.5em; text-align: left; }
+caption::before { content: attr(data-label) "  "; font-weight: 700; }
+
+/* ===== 图片 ===== */
+figure {
+    margin: 1.5em 0;
+    text-align: center;
+    page-break-inside: avoid;
+}
+figure img {
+    max-width: 90%;
+    max-height: 45vh;
+    height: auto;
+}
+figcaption {
+    font-size: 10pt;
+    color: #666;
+    margin-top: 0.5em;
+    text-align: center;
+}
+figcaption::before { content: attr(data-label) "  "; font-weight: 700; }
+
+/* ===== 引用框 ===== */
+.highlight-box {
+    border-left: 4px solid #2E7D32;
+    padding: 0.8em 1em;
+    margin: 1em 0;
+    background: #f8faf8;
+    page-break-inside: avoid;
+}
+.highlight-box.red {
+    border-left-color: #E53935;
+    background: #faf8f8;
+}
+.highlight-box.blue {
+    border-left-color: #1565C0;
+    background: #f8f9fa;
+}
+
+/* ===== 投资梯队 ===== */
+.tier-box {
+    border: 1px solid #ddd;
+    padding: 0.8em 1em;
+    margin: 0.8em 0;
+    page-break-inside: avoid;
+}
+.tier-box .tier-title {
+    font-weight: 700;
+    font-size: 12pt;
+    margin-bottom: 0.3em;
+}
+.tier1 { border-left: 5px solid #1B5E20; background: #f0f7f0; }
+.tier2 { border-left: 5px solid #2E7D32; background: #f5f9f5; }
+.tier3 { border-left: 5px solid #66BB6A; background: #f8fbf8; }
+.tier4 { border-left: 5px solid #EF5350; background: #fdf5f5; }
+
+/* ===== 防止溢出 ===== */
+pre, table, figure, img, svg, blockquote, .equation {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+a { word-break: break-all; color: #1565C0; }
+
+/* ===== 分页控制 ===== */
+.page-break { page-break-after: always; }
+</style>
+</head>
+<body>
+
+<!-- ===== 封面 ===== -->
+<div class="cover">
+    <div class="cover-decoration-1"></div>
+    <div class="cover-decoration-2"></div>
+    <div class="cover-decoration-3"></div>
+    <div class="cover-content">
+        <div class="cover-label">行业深度研究报告</div>
+        <div class="cover-title">全球新能源锂电产业链<br>供需格局与投资价值分析</div>
+        <div class="cover-subtitle">从锂的供需出发，绘制产业链投资地图</div>
+        <div class="cover-meta">
+            <p>报告日期：2026年4月</p>
+            <p>面向对象：专业投资者</p>
+            <p>报告类型：行业深度 | 产业链研究</p>
+        </div>
+    </div>
+</div>
+
+<!-- ===== 目录 ===== -->
+<div class="toc-page">
+    <div class="toc-title">目 录</div>
+    <ul class="toc">
+        <li class="toc-h1"><a href="#sec1">一、执行摘要</a></li>
+        <li class="toc-h1"><a href="#sec2">二、锂供需格局：一切分析的锚点</a></li>
+        <li class="toc-h2"><a href="#sec2-1">2.1 需求侧：储能是最大超预期变量</a></li>
+        <li class="toc-h2"><a href="#sec2-2">2.2 供给侧：2026年是最后的投放高峰</a></li>
+        <li class="toc-h2"><a href="#sec2-3">2.3 供需平衡与价格展望</a></li>
+        <li class="toc-h1"><a href="#sec3">三、产业链传导机制</a></li>
+        <li class="toc-h1"><a href="#sec4">四、各环节供需格局与投资地图</a></li>
+        <li class="toc-h2"><a href="#sec4-1">4.1 上游锂矿：利润弹性最大</a></li>
+        <li class="toc-h2"><a href="#sec4-2">4.2 中游锂电材料：格局分化</a></li>
+        <li class="toc-h2"><a href="#sec4-3">4.3 下游电池：龙头锁定利润</a></li>
+        <li class="toc-h2"><a href="#sec4-4">4.4 储能系统集成：最大受益环节</a></li>
+        <li class="toc-h1"><a href="#sec5">五、铁锂正极技术路线深度拆解</a></li>
+        <li class="toc-h2"><a href="#sec5-1">5.1 三大技术路线对比</a></li>
+        <li class="toc-h2"><a href="#sec5-2">5.2 LMFP：下一代颠覆性变量</a></li>
+        <li class="toc-h1"><a href="#sec6">六、投资标的排序与核心逻辑</a></li>
+        <li class="toc-h1"><a href="#sec7">七、风险提示</a></li>
+        <li class="toc-h1"><a href="#sec8">附录：核心数据速查</a></li>
+    </ul>
+</div>
+
+<!-- ===== 正文 ===== -->
+
+<h1 id="sec1">一、执行摘要</h1>
+
+<p>本报告基于对全球锂供需格局的系统性验证（涵盖UBS、Morgan Stanley、Wood Mackenzie、IEA等海外机构交叉比对，以及中国本土企业一手数据），从锂的供需出发，全面分析全球新能源锂电产业链各环节的发展空间、竞争格局和投资价值。</p>
+
+<div class="highlight-box">
+<strong>核心结论：</strong>
+<ol>
+<li><strong>锂价已确认进入新一轮上行周期。</strong>碳酸锂价格从2025年低点7万元/吨回升至2026年4月的17万元/吨，涨幅超130%。驱动因素并非"油价上涨→新能源替代"（该逻辑已被证伪），而是储能爆发（+111.8% YoY）、供给端频繁扰动、库存结构性去化的三重共振。</li>
+<li><strong>2026年供需紧平衡，2027年缺口扩大。</strong>综合UBS（缺口2.2万吨LCE）、Morgan Stanley（缺口8万吨）等预测，2026年全球碳酸锂供需处于紧平衡至轻度短缺状态。2027年后供给增速从27%放缓至12-15%，而需求增速若维持20%以上，缺口将显著扩大。</li>
+<li><strong>产业链利润向两端集中：上游资源 + 海外储能集成。</strong>中游材料（电解液、负极、固相法铁锂正极）仍深陷产能过剩泥潭；隔膜和海外三元正极格局相对较好；下游电池环节宁德时代锁定大部分利润，二线厂商以利润换份额。</li>
+<li><strong>LMFP是铁锂正极最大的技术变量。</strong>磷酸锰铁锂2025年出货量约3万吨（+275%），2026年预计7-8万吨，2030年有望突破50万吨。率先实现规模化量产的企业（德方纳米、容百科技）将吃到最大红利。</li>
+</ol>
+</div>
+
+<h1 id="sec2">二、锂供需格局：一切分析的锚点</h1>
+
+<h2 id="sec2-1">2.1 需求侧：储能是最大超预期变量</h2>
+
+<p>2026年全球碳酸锂需求预计约215万吨LCE（修正后），同比增长约20%。需求结构正经历深刻变化：</p>
+
+<table>
+    <caption data-label="表1">全球碳酸锂需求结构（2025-2026E）</caption>
+    <thead>
+        <tr><th>需求领域</th><th>2025年（万吨LCE）</th><th>2026E（万吨LCE）</th><th>增速</th><th>关键判断</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>动力电池（全球）</td><td>~140</td><td>~155</td><td>+11%</td><td>国内增速换挡，海外扩张强劲</td></tr>
+        <tr><td>储能电池（全球）</td><td>~39</td><td>~48</td><td>+23%</td><td>最大超预期来源，含AIDC 2.4万吨</td></tr>
+        <tr><td>消费电子</td><td>~8</td><td>~8</td><td>0%</td><td>稳定</td></tr>
+        <tr><td>工业/其他</td><td>~5</td><td>~4</td><td>-20%</td><td>需求拖累项</td></tr>
+        <tr><td><strong>合计</strong></td><td><strong>~192</strong></td><td><strong>~215</strong></td><td><strong>+12%</strong></td><td>综合多机构预测中枢值</td></tr>
+    </tbody>
+</table>
+
+<p><strong>动力电池需求的核心变化：</strong>中国国内增速从2025年的+28.2%换挡至2026E的+12~15%（IEA口径），但海外增量（中国整车出口+海外本地生产+电池出口）合计约10万吨LCE增量，覆盖国内下滑后仍有盈余。全球EV销量预计从2025年的20.7百万辆增至2026年的23.7百万辆（+15.2%）。</p>
+
+<p><strong>储能需求的核心驱动力：</strong>2025年全球储能电池出货651.5GWh（+76.2%），2026年预计801GWh（+23%）。其中AI数据中心储能（AIDC）从2025年的约12GWh（技术验证阶段）跃升至2026E的约40GWh（快速放量阶段），已越过概念炒作阶段，进入订单兑现和收入确认阶段。宁德时代年报明确提及"与全球领先科技公司合作AIDC"，双登股份2025H1 AIDC收入10.28亿元同比翻番，均为有效验证。</p>
+
+<h2 id="sec2-2">2.2 供给侧：2026年是最后的投放高峰</h2>
+
+<p>全球锂资源供给的扩张节奏具有极强的周期滞后性（3-5年硬岩矿、7-10年盐湖）。</p>
+
+<table>
+    <caption data-label="表2">全球锂资源新增产能节奏</caption>
+    <thead>
+        <tr><th>年份</th><th>预计新增产能（万吨LCE）</th><th>核心驱动</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>2023</td><td>40</td><td>2021年高锂价投资的滞后释放</td></tr>
+        <tr><td>2024</td><td>45</td><td>同上</td></tr>
+        <tr><td>2025</td><td>47</td><td>同上</td></tr>
+        <tr><td><strong>2026</strong></td><td><strong>50</strong></td><td><strong>本轮扩产周期最后的高峰</strong></td></tr>
+        <tr><td>2027</td><td>22</td><td>CAPEX削减的滞后影响显现</td></tr>
+        <tr><td>2028</td><td>18</td><td>绿地项目延期/取消</td></tr>
+        <tr><td>2029</td><td>15</td><td>新勘探项目几乎为零</td></tr>
+    </tbody>
+</table>
+
+<p><strong>关键供给扰动：</strong>津巴布韦出口禁令（2026年2月，全球第四大锂生产国暂停出口）、江西锂云母停产（环保整改）、资本开支削减（Core Lithium停产、Pilbara Ngungaju进入维护模式）等事件，直接削弱2027-2029年的新增供给。但当前$2,500/吨锂辉石价格已触发Core Lithium复产（2026年5月重启），mothballed产能是最大预期差变量。</p>
+
+<h2 id="sec2-3">2.3 供需平衡与价格展望</h2>
+
+<table>
+    <caption data-label="表3">各机构2026年供需平衡预测对比</caption>
+    <thead>
+        <tr><th>机构</th><th>2026E供给（万吨）</th><th>2026E需求（万吨）</th><th>供需平衡</th><th>价格预测</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>国联期货</td><td>203</td><td>214</td><td><strong>缺口-11</strong></td><td>17-19万元/吨</td></tr>
+        <tr><td>华泰证券</td><td>216.2</td><td>215（修正后）</td><td><strong>紧平衡+1.2</strong></td><td>8-9万元/吨</td></tr>
+        <tr><td>瑞银（UBS）</td><td>192</td><td>215（修正后）</td><td><strong>缺口-23</strong></td><td>$26,000/吨（~18.5万元）</td></tr>
+        <tr><td>Morgan Stanley</td><td>158</td><td>148</td><td><strong>缺口-8</strong></td><td>$11,432-$28,580区间</td></tr>
+    </tbody>
+</table>
+
+<div class="highlight-box blue">
+<strong>独立判断：</strong>以修正后需求215万吨为锚，2026年供需处于<strong>紧平衡至轻度短缺</strong>状态，碳酸锂价格中枢维持在<strong>17-20万元/吨</strong>。当前17万元/吨的价格已计价大部分乐观预期（UBS目标价$26,000/吨约18.5万元），后续上涨空间取决于2027年缺口是否超预期。
+</div>
+
+<h1 id="sec3">三、产业链传导机制</h1>
+
+<p>碳酸锂作为锂电产业链的"原油"，其价格变化通过三条路径传导至各环节：</p>
+
+<p><strong>路径一：成本传导（对中游材料）。</strong>碳酸锂是正极材料（磷酸铁锂、三元）和电解液（六氟磷酸锂）的核心原材料，成本占比40-80%。锂价上涨意味着材料企业原材料成本上升，能否传导给下游电池厂取决于格局。隔膜和负极不直接用碳酸锂，间接受益于行业景气度提升。</p>
+
+<p><strong>路径二：库存重估（对所有环节）。</strong>锂价上涨周期中，各环节企业的低价碳酸锂库存带来短期库存收益。这在2025年下半年已充分体现，2026年该效应减弱。</p>
+
+<p><strong>路径三：利润再分配（对全产业链）。</strong>锂价上涨本质是利润从产业链中下游向上游资源端集中。在锂价7万元/吨的底部，上游锂矿普遍亏损，利润集中在电池和整车环节；在锂价17万元/吨的高位，低成本锂矿吨毛利达14万元，而中游材料加工费被压缩，下游电池面临客户降价压力。</p>
+
+<h1 id="sec4">四、各环节供需格局与投资地图</h1>
+
+<figure id="fig-1">
+    <img src="/mnt/agents/output/锂电产业链全景供需格局图.png" alt="产业链全景图">
+    <figcaption data-label="图1">全球新能源锂电产业链全景供需格局图（2026E）</figcaption>
+</figure>
+
+<h2 id="sec4-1">4.1 上游锂矿：利润弹性最大，成本曲线决定分化</h2>
+
+<p>锂价从7万→17万元/吨，上游是确定性最高的受益环节。但2026年并非所有锂矿企业都能同等受益——成本曲线决定了利润弹性分化。</p>
+
+<table>
+    <caption data-label="表4">上游锂矿核心标的对比</caption>
+    <thead>
+        <tr><th>标的</th><th>核心逻辑</th><th>成本优势</th><th>2026年催化</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>盐湖股份</strong> (000792)</td><td>国内盐湖龙头</td><td>~3万元/吨，行业最低</td><td>碳酸锂17万→吨毛利14万元</td></tr>
+        <tr><td><strong>天齐锂业</strong> (002466)</td><td>Greenbushes全球最低成本硬岩矿</td><td>控股26%全球最优锂辉石矿</td><td>CGP3爬坡，精矿定价改为月度参考</td></tr>
+        <tr><td><strong>赣锋锂业</strong> (002460)</td><td>全球资源布局最全</td><td>2025年锂盐销量18.5万吨LCE(+42%)</td><td>Q1净利润16-21亿元，扭亏为盈</td></tr>
+        <tr><td><strong>中矿资源</strong> (002738)</td><td>Bikita产量释放</td><td>精矿32.8万吨/年，持续降本</td><td>年内股价涨幅128%，但面临津巴布韦政策风险</td></tr>
+    </tbody>
+</table>
+
+<p>赣锋锂业2025年锂系列产品销量达184,829吨LCE，同比增长42.47%。2026年一季度预计实现归母净利润16亿元至21亿元，上年同期为亏损3.56亿元，单季度盈利已接近2025年全年水平。公司在澳大利亚Mount Marion、阿根廷、爱尔兰、马里以及国内青海、江西、内蒙古等地掌控多块优质锂矿资源，形成了"资源+冶炼+电池"垂直一体化布局。</p>
+
+<p>天齐锂业核心资产Greenbushes的现金生产成本处于行业较低水平。2026年1月CGP3生产出首批化学级锂精矿，长期产能有望达266万吨/年（折合约35万吨LCE）。公司资产负债率仅28.04%，财务结构稳健。精矿定价从季度改为月度参考，价格敏感度提升。</p>
+
+<p>盐湖股份2025年4万吨/年基础锂盐一体化项目建成投产后，总产能达8万吨/年，为国内盐湖提锂最大规模。盐湖提锂成本约3万元/吨，在碳酸锂17万元/吨假设下，吨毛利约14万元，年化利润弹性非常可观。公司技术打破传统盐湖提锂瓶颈，锂三大车间综合收率提升至82.4%。</p>
+
+<h2 id="sec4-2">4.2 中游锂电材料：格局分化，隔膜和海外正极相对更优</h2>
+
+<h3>隔膜：格局最好（★★★★）</h3>
+
+<p>湿法隔膜三重壁垒（高资本门槛：单线2-3亿元；长认证周期1-2年；强know-know）导致行业经过2023-2024年洗牌后，二三线产能出清，CR3超60%。</p>
+
+<p><strong>恩捷股份</strong> (002812)：2025年隔膜销量128.4亿平米（+45.5%），毛利率18.01%（+10.62pp），境外毛利率34.97%。行业格局改善+海外高毛利订单驱动扭亏为盈。隔膜是2025年中游材料中供需格局最优的环节。</p>
+
+<h3>三元正极（海外）：格局较好（★★★★）</h3>
+
+<p>海外三元正极认证周期长（1-2年）、高镍技术壁垒、属地化产能稀缺。能进入海外电池厂（三星SDI/LG/SK On）供应链的企业享受溢价。</p>
+
+<p><strong>容百科技</strong> (688005)：2025年营业收入122.67亿元，三元正极出货约10万吨。韩国工厂6万吨产能全面投产并通过国际认证，波兰2.5万吨2026H2建成。磷酸锰铁锂销量连续三年翻倍增长，钠电正极成为宁德时代第一供应商。海外产能布局形成独特的"属地化供应"壁垒。</p>
+
+<h3>电解液：格局最差（★）</h3>
+
+<p>配方混合技术壁垒低、产线投资仅几千万至1亿元、建设周期6-9个月。六氟磷酸锂产能从2020年的5万吨扩至2024年的超30万吨，严重过剩。天赐材料/新宙邦毛利率仅10-15%，龙头也无法阻止价格战。</p>
+
+<h3>负极：格局差（★★）</h3>
+
+<p>石墨化产能严重过剩（利用率&lt;60%），人造石墨产品差异化低，一体化重资产陷阱。贝特瑞/杉杉/璞泰来毛利率15-20%，龙头企业同样深陷价格战。</p>
+
+<h2 id="sec4-3">4.3 下游电池：宁德时代一家独大，二线以利润换份额</h2>
+
+<p><strong>宁德时代</strong> (300750/9868.HK)毫无疑问是全球电池行业最大的受益者。2025年营收4,237亿元（+17%），净利润722亿元（+42%），销量661GWh（+39%），产能利用率96.9%。储能电池销量121GWh（+29%），毛利率26.71%，连续五年全球第一。境外收入1,296亿元（占比30.6%），毛利率31.44%，高出境内7.4个百分点。公司全球总法律顾问明确表示：未来3年储能和动力电池业务将达到1:1，之后储能可能超过动力电池。</p>
+
+<p><strong>比亚迪</strong> (002594/1211.HK)2025年动力电池及储能电池装机总量285.6GWh（+46.7%），储能全球系统出货量超60GWh，与沙特电力公司签署12.5GWh全球最大电网侧储能项目。</p>
+
+<p><strong>亿纬锂能</strong> (300014)2025年储能电池出货71.05GWh（+40.8%）首超动力电池，但毛利率仅12.28%（同期宁德时代26.71%），以利润换份额。Q1边际改善（净利润+25-35%），若价格传导顺利弹性大。</p>
+
+<h2 id="sec4-4">4.4 储能系统集成与AIDC：最大的受益环节</h2>
+
+<p>在储能产业链中，电芯制造环节虽然出货量大，但面临激烈的价格竞争。相比之下，储能系统集成和电力电子环节是2025-2026年利润表现更优的环节。</p>
+
+<p><strong>阳光电源</strong> (300274)是储能系统集成环节的绝对龙头。2025年储能系统全球发货43GWh（+54%），营收372.87亿元（+49%），毛利率高达36.49%。海外储能发货36GWh（+90%），主动放弃国内低毛利项目。储能营收占比41.81%，已成为第一大业务。公司预计2026年储能出货60GWh+。</p>
+
+<p><strong>科华数据</strong> (002335)2025Q2收入25.2亿元（环比+107%），AIDC数据中心业务驱动业绩拐点。<strong>南都电源</strong>2025H1数据中心储能收入近19亿元，是唯一正增长板块。<strong>双登股份</strong> (06960.HK)2025H1 AIDC收入10.28亿元同比翻番，首次超越通信储能成为第一大收入来源。</p>
+
+<h1 id="sec5">五、铁锂正极技术路线深度拆解</h1>
+
+<h2 id="sec5-1">5.1 三大技术路线对比</h2>
+
+<table>
+    <caption data-label="表5">磷酸铁锂三大技术路线对比</caption>
+    <thead>
+        <tr><th>维度</th><th>固相法-磷酸铁路线</th><th>固相法-草酸亚铁路线</th><th>液相法</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>代表企业</strong></td><td>湖南裕能、龙蟠科技</td><td>富临精工</td><td>德方纳米</td></tr>
+        <tr><td><strong>市场占比</strong></td><td>&gt;90%</td><td>&lt;5%</td><td>&lt;10%</td></tr>
+        <tr><td><strong>单吨成本</strong></td><td><strong>最低</strong>（3.0-3.2万）</td><td>中等（3.3-3.5万）</td><td>略高（3.5-3.7万）</td></tr>
+        <tr><td><strong>压实密度</strong></td><td>高（2.45-2.65）</td><td><strong>最高</strong></td><td>较低（2.3-2.4）</td></tr>
+        <tr><td><strong>循环寿命</strong></td><td>4000-6000次</td><td>5000-7000次</td><td><strong>&gt;8000次</strong></td></tr>
+        <tr><td><strong>核心优势</strong></td><td>成本低、产能大</td><td>高压实、高容量</td><td>颗粒均匀、长循环</td></tr>
+        <tr><td><strong>适配场景</strong></td><td>动力电池（高压实）</td><td>高端动力电池</td><td>储能电池（长循环）</td></tr>
+    </tbody>
+</table>
+
+<h2 id="sec5-2">5.2 LMFP：下一代颠覆性变量</h2>
+
+<p>磷酸锰铁锂（LMFP）通过在LFP晶格中引入锰元素，将电压平台从3.2V提升至4.1V，能量密度提升15-20%，同时保留橄榄石结构的安全性优势。</p>
+
+<table>
+    <caption data-label="表6">LMFP产业化进展</caption>
+    <thead>
+        <tr><th>企业</th><th>进展</th><th>产能</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>德方纳米</strong></td><td>11万吨LMFP项目已投产，行业第一</td><td>11万吨（已建成）</td></tr>
+        <tr><td><strong>容百科技</strong></td><td>2026年"纯用方案"正式上车</td><td>快速扩张中</td></tr>
+        <tr><td><strong>宁德时代</strong></td><td>M3P电池已量产装车</td><td>依托供应商</td></tr>
+        <tr><td><strong>当升科技</strong></td><td>已实现LMFP十吨级出货</td><td>扩产中</td></tr>
+    </tbody>
+</table>
+
+<p>2025年国内LMFP出货量约3万吨（+275%），2026年预计7-8万吨，2030年有望突破50万吨。LMFP的量产将重塑铁锂正极竞争格局：技术壁垒大幅提升（纳米化、掺杂、包覆工艺难度远高于LFP），液相法路线可能逆袭（LMFP需要纳米级颗粒和均匀元素分布），客户认证壁垒进一步强化（纯用方案需重新设计BMS和电解液体系）。</p>
+
+<h1 id="sec6">六、投资标的排序与核心逻辑</h1>
+
+<div class="tier-box tier1">
+    <div class="tier-title">第一梯队（利润弹性最大，确定性最高）</div>
+    <p><strong>低成本锂矿：</strong>盐湖股份（成本~3万元/吨，吨毛利弹性最大）、天齐锂业（Greenbushes全球成本最低硬岩矿，CGP3爬坡）、赣锋锂业（全球资源布局+锂盐产能释放+电池业务协同）。共同特征："资源禀赋优异+成本曲线左侧+产量2026年有明确增量"。</p>
+    <p><strong>海外储能系统集成：</strong>阳光电源（海外储能毛利率36.49%，AIDC电源新业务拓展，主动放弃国内低毛利项目，盈利质量极高）。</p>
+</div>
+
+<div class="tier-box tier2">
+    <div class="tier-title">第二梯队（高景气，格局较好）</div>
+    <p><strong>电池龙头：</strong>宁德时代（全球市占率39.2%，储能毛利率26.71%，AIDC深度布局，境外毛利率31.44%）。比亚迪储能（全球大储订单突破，刀片电池技术领先）。</p>
+    <p><strong>隔膜龙头：</strong>恩捷股份（行业格局改善，毛利率同比+10.62pp至18.01%，境外毛利率34.97%，扭亏为盈确认拐点）。</p>
+    <p><strong>海外三元正极：</strong>容百科技（韩国6万吨+波兰2.5万吨海外产能，LMFP布局领先）。</p>
+</div>
+
+<div class="tier-box tier3">
+    <div class="tier-title">第三梯队（弹性大，但需验证）</div>
+    <p><strong>二线电池厂：</strong>亿纬锂能（储能出货全球第二，但毛利率仅12.28%，以利润换份额，Q1边际改善）。国轩高科、中创新航等也处于类似逻辑。</p>
+    <p><strong>LMFP先行者：</strong>德方纳米（11万吨LMFP产能行业第一，液相法技术优势）。</p>
+    <p><strong>AIDC配套：</strong>科华数据（AIDC业绩拐点已现）、南都电源（数据中心储能翻倍扩产）、双登股份（港股，AIDC收入首超传统业务）。</p>
+</div>
+
+<div class="tier-box tier4">
+    <div class="tier-title">第四梯队（承压或回避）</div>
+    <p><strong>铁锂正极（固相法普通产品）：</strong>湖南裕能、德方纳米（传统产品）等，加工费持续承压，碳酸锂涨价传导存在时滞。</p>
+    <p><strong>电解液/负极：</strong>天赐材料、新宙邦、贝特瑞、璞泰来等，产能过剩格局尚未根本扭转，毛利率修复慢于隔膜。</p>
+    <p><strong>储能电池（国内）：</strong>国轩高科、中创新航等，国内价格竞争激烈，毛利率个位数。</p>
+</div>
+
+<h1 id="sec7">七、风险提示</h1>
+
+<ol>
+    <li><strong>锂价回落风险。</strong>当前碳酸锂17万元/吨已接近UBS 2026年目标价。若津巴布韦出口恢复超预期、非洲新增矿源投产、或储能出货增速不及预期，价格可能回落至12-15万元/吨区间。</li>
+    <li><strong>国内新能源车需求持续疲软。</strong>若消费信心持续低迷、价格战恶化，全年增速可能降至个位数，拖累动力电池需求。</li>
+    <li><strong>海外贸易壁垒升级。</strong>欧盟对中国电动车加征关税、美国IRA本土化要求等可能限制中国电池和储能产品的海外出口增速。</li>
+    <li><strong>技术路线颠覆。</strong>固态电池2027年后小规模量产、钠离子电池在储能领域替代部分磷酸铁锂、氢燃料电池在重卡领域突破，均可能对锂电需求产生结构性影响。</li>
+    <li><strong>AIDC储能预期透支。</strong>AIDC储能2026年体量仅40GWh（占全球储能5%），当前部分AIDC相关标的估值已透支远期预期，需警惕概念炒作风险。</li>
+    <li><strong>锂矿供给弹性被低估。</strong>当前$2,500/吨锂辉石价格已触发Core Lithium复产、Pilbara考虑重启Ngungaju。若价格维持$1,800+/吨超过6个月，全球可能有8-10万吨/年mothballed产能复产，缓和2027年缺口。</li>
+</ol>
+
+<h1 id="sec8">附录：核心数据速查</h1>
+
+<table>
+    <caption data-label="表7">全球锂供需平衡表（2024-2028E）</caption>
+    <thead>
+        <tr><th>指标</th><th>2024</th><th>2025</th><th>2026E</th><th>2027E</th><th>2028E</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>全球需求（万吨LCE）</td><td>165</td><td>192</td><td>215</td><td>258</td><td>310</td></tr>
+        <tr><td>全球供给（万吨LCE）</td><td>168</td><td>185</td><td>203-216</td><td>230-245</td><td>255-275</td></tr>
+        <tr><td>供需平衡（万吨）</td><td>+3</td><td>-7</td><td>-12~+1</td><td>-28~-5</td><td>-55~-15</td></tr>
+        <tr><td>碳酸锂价格（万元/吨）</td><td>10</td><td>7-12</td><td>17-20</td><td>18-25</td><td>20-30</td></tr>
+    </tbody>
+</table>
+
+<table>
+    <caption data-label="表8">产业链各环节毛利率对比（2025年实际）</caption>
+    <thead>
+        <tr><th>环节</th><th>代表企业</th><th>整体毛利率</th><th>海外毛利率</th><th>格局判断</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>低成本锂矿</td><td>盐湖股份</td><td>~50%</td><td>N/A</td><td>最优</td></tr>
+        <tr><td>隔膜（境外）</td><td>恩捷股份</td><td>18%</td><td>35%</td><td>好</td></tr>
+        <tr><td>储能系统（海外）</td><td>阳光电源</td><td>36%</td><td>40%</td><td>最优</td></tr>
+        <tr><td>动力电池（海外）</td><td>宁德时代</td><td>24%</td><td>31%</td><td>好</td></tr>
+        <tr><td>三元正极（海外）</td><td>容百科技</td><td>~10%</td><td>提升中</td><td>改善中</td></tr>
+        <tr><td>电解液</td><td>天赐材料</td><td>~15%</td><td>N/A</td><td>差</td></tr>
+        <tr><td>负极</td><td>贝特瑞</td><td>~18%</td><td>N/A</td><td>差</td></tr>
+        <tr><td>铁锂正极（固相法）</td><td>湖南裕能</td><td>~5-8%</td><td>N/A</td><td>最差</td></tr>
+    </tbody>
+</table>
+
+<table>
+    <caption data-label="表9">核心标的估值一览（2026年4月）</caption>
+    <thead>
+        <tr><th>标的</th><th>PE(TTM)</th><th>PB</th><th>核心估值逻辑</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>宁德时代</td><td>~18x</td><td>~4.5x</td><td>全球龙头溢价，储能+AIDC第二曲线</td></tr>
+        <tr><td>比亚迪</td><td>~20x</td><td>~5x</td><td>整车+电池+储能一体化</td></tr>
+        <tr><td>阳光电源</td><td>~18x</td><td>~6x</td><td>海外储能高毛利+AIDC电源新叙事</td></tr>
+        <tr><td>盐湖股份</td><td>~12x</td><td>~3x</td><td>最低成本锂矿，利润弹性最大</td></tr>
+        <tr><td>天齐锂业</td><td>~11x</td><td>~2x</td><td>低成本资源+CGP3爬坡</td></tr>
+        <tr><td>赣锋锂业</td><td>~21x</td><td>~3.7x</td><td>全球资源布局最全</td></tr>
+        <tr><td>恩捷股份</td><td>~50x</td><td>~3x</td><td>隔膜格局改善，海外高毛利</td></tr>
+        <tr><td>亿纬锂能</td><td>~25x</td><td>~3x</td><td>储能规模第二，毛利率修复预期</td></tr>
+    </tbody>
+</table>
+
+<div class="highlight-box red" style="margin-top: 2cm;">
+<strong>免责声明：</strong>本报告基于公开信息和独立研究，不构成投资建议。投资者应根据自身判断做出投资决策，并承担相应风险。数据来源包括UBS、Morgan Stanley、Wood Mackenzie、IEA Global EV Outlook、GGII、EVTank、InfoLink、各公司年报/季报、Project Blue、Argus Media等。
+</div>
+
+</body>
+</html>

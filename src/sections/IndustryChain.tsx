@@ -1,8 +1,56 @@
 import { useMemo, useState } from 'react';
 import { Network, TrendingUp, TrendingDown, Minus, ChevronRight } from 'lucide-react';
 
+type StatusKey = 'excellent' | 'good' | 'growing' | 'moderate' | 'constrained' | 'oversupply' | 'booming' | 'stable';
+
+type ResourceNode = {
+  id: string;
+  name: string;
+  companies: string[];
+  utilization: number;
+  share: number;
+  status: StatusKey;
+  cost: string;
+};
+
+type MaterialNode = {
+  id: string;
+  name: string;
+  companies: string[];
+  utilization: number;
+  share: number;
+  status: StatusKey;
+  margin: string;
+};
+
+type BatteryNode = {
+  id: string;
+  name: string;
+  type: string;
+  utilization: number;
+  share: number;
+  status: StatusKey;
+  margin: string;
+};
+
+type ApplicationNode = {
+  id: string;
+  name: string;
+  demand: number;
+  growth: number;
+  status: StatusKey;
+};
+
+type ChainData = {
+  upstream: ResourceNode[];
+  midstream_cathode: MaterialNode[];
+  midstream_other: MaterialNode[];
+  downstream: BatteryNode[];
+  application: ApplicationNode[];
+};
+
 // 产业链节点数据
-const chainData = {
+const chainData: ChainData = {
   upstream: [
     { id: 'salt_lake', name: '盐湖提锂', companies: ['盐湖股份', 'SQM', 'Albemarle'], utilization: 85, share: 28, status: 'good', cost: '3-5万元/吨' },
     { id: 'spodumene', name: '锂辉石矿', companies: ['天齐锂业', 'Pilbara', 'Greenbushes'], utilization: 92, share: 45, status: 'good', cost: '5-8万元/吨' },
@@ -47,11 +95,11 @@ const filterConfig = {
   all: { label: '全部节点', match: () => true },
   good: {
     label: '格局好',
-    match: (status: string) => ['excellent', 'good', 'growing', 'booming'].includes(status),
+    match: (status: StatusKey) => ['excellent', 'good', 'growing', 'booming'].includes(status),
   },
   oversupply: {
     label: '产能过剩',
-    match: (status: string) => status === 'oversupply',
+    match: (status: StatusKey) => status === 'oversupply',
   },
 } as const;
 
@@ -59,17 +107,17 @@ type ChainSectionKey = keyof typeof chainData;
 type ChainNode = (typeof chainData)[ChainSectionKey][number];
 
 function NodeCard({ node }: { node: ChainNode }) {
-  const cfg = statusConfig[node.status as keyof typeof statusConfig];
+  const cfg = statusConfig[node.status];
 
   return (
     <div className={`${cfg.bgColor} ${cfg.borderColor} border-2 rounded-xl p-3 hover:shadow-lg transition-all cursor-pointer group`}>
       <div className="flex items-start justify-between mb-2">
         <div className="flex-1">
           <h4 className="font-bold text-sm text-slate-900 mb-1">{node.name}</h4>
-          {node.companies && (
+          {'companies' in node && (
             <p className="text-xs text-slate-600 line-clamp-1">{node.companies.join('、')}</p>
           )}
-          {node.type && (
+          {'type' in node && (
             <p className="text-xs text-slate-600">{node.type}</p>
           )}
         </div>
@@ -79,7 +127,7 @@ function NodeCard({ node }: { node: ChainNode }) {
       </div>
 
       <div className="space-y-1 text-xs">
-        {node.utilization !== undefined && (
+        {'utilization' in node && (
           <div className="flex justify-between">
             <span className="text-slate-500">产能利用率</span>
             <span className={`font-bold ${node.utilization >= 80 ? 'text-emerald-700' : node.utilization >= 60 ? 'text-yellow-700' : 'text-red-700'}`}>
@@ -87,31 +135,31 @@ function NodeCard({ node }: { node: ChainNode }) {
             </span>
           </div>
         )}
-        {node.share !== undefined && (
+        {'share' in node && (
           <div className="flex justify-between">
             <span className="text-slate-500">市场份额</span>
             <span className="font-bold text-slate-900">{node.share}%</span>
           </div>
         )}
-        {node.cost && (
+        {'cost' in node && (
           <div className="flex justify-between">
             <span className="text-slate-500">成本</span>
             <span className="font-bold text-slate-900">{node.cost}</span>
           </div>
         )}
-        {node.margin && (
+        {'margin' in node && (
           <div className="flex justify-between">
             <span className="text-slate-500">毛利率</span>
             <span className="font-bold text-slate-900">{node.margin}</span>
           </div>
         )}
-        {node.demand !== undefined && (
+        {'demand' in node && (
           <div className="flex justify-between">
             <span className="text-slate-500">2026E需求</span>
             <span className="font-bold text-slate-900">{node.demand}万吨</span>
           </div>
         )}
-        {node.growth !== undefined && (
+        {'growth' in node && (
           <div className="flex justify-between items-center">
             <span className="text-slate-500">增速</span>
             <span className={`font-bold flex items-center ${node.growth > 15 ? 'text-emerald-700' : node.growth > 0 ? 'text-blue-700' : 'text-gray-600'}`}>

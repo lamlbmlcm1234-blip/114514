@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, ReferenceLine } from 'recharts';
 import { Building2, TrendingUp, AlertCircle, CheckCircle, XCircle } from 'lucide-react';
 
+type ForecastYear = '2026' | '2027' | '2028';
+type BiasKey = 'bullish' | 'neutral' | 'bearish';
+
 // 机构预测数据
 const institutionData = [
   {
@@ -20,7 +23,7 @@ const institutionData = [
       '津巴布韦出口禁令2027年全面生效，供给受限',
       '2027年后绿地项目稀缺，供给增速放缓至12-15%',
     ],
-    bias: 'bullish',
+    bias: 'bullish' as const,
     updateDate: '2026-03',
   },
   {
@@ -39,7 +42,7 @@ const institutionData = [
       '供给端考虑了更多复产产能（Core Lithium、Pilbara Ngungaju）',
       '价格区间较宽，反映不确定性',
     ],
-    bias: 'neutral',
+    bias: 'neutral' as const,
     updateDate: '2026-02',
   },
   {
@@ -58,7 +61,7 @@ const institutionData = [
       '国内需求增速换挡，但海外增量覆盖',
       '供给端考虑了江西锂云母复产',
     ],
-    bias: 'bearish',
+    bias: 'bearish' as const,
     updateDate: '2026-04',
   },
   {
@@ -77,7 +80,7 @@ const institutionData = [
       '供给端扰动频繁（津巴布韦禁令、江西停产）',
       '库存结构性去化，2026年缺口扩大',
     ],
-    bias: 'bullish',
+    bias: 'bullish' as const,
     updateDate: '2026-04',
   },
   {
@@ -96,7 +99,7 @@ const institutionData = [
       '考虑了技术进步对单位锂耗的影响',
       '价格预测相对温和',
     ],
-    bias: 'neutral',
+    bias: 'neutral' as const,
     updateDate: '2026-01',
   },
 ];
@@ -108,7 +111,7 @@ const biasConfig = {
 };
 
 export default function InstitutionForecast() {
-  const [selectedYear, setSelectedYear] = useState<'2026' | '2027' | '2028'>('2026');
+  const [selectedYear, setSelectedYear] = useState<ForecastYear>('2026');
   const [selectedInstitution, setSelectedInstitution] = useState<string>('all');
 
   // 准备对比数据
@@ -136,7 +139,7 @@ export default function InstitutionForecast() {
   const trendData = ['2026', '2027', '2028'].map(year => {
     const yearData: any = { year };
     institutionData.forEach(inst => {
-      yearData[inst.id] = inst.forecasts[year as '2026' | '2027' | '2028'].balance;
+      yearData[inst.id] = inst.forecasts[year as ForecastYear].balance;
     });
     return yearData;
   });
@@ -173,10 +176,10 @@ export default function InstitutionForecast() {
             <p className="text-sm text-slate-500 mt-1">UBS · Morgan Stanley · 华泰证券 · 国联期货 · Wood Mackenzie</p>
           </div>
           <div className="flex gap-2">
-            {['2026', '2027', '2028'].map(year => (
+              {(['2026', '2027', '2028'] as ForecastYear[]).map(year => (
               <button
                 key={year}
-                onClick={() => setSelectedYear(year as '2026' | '2027' | '2028')}
+                  onClick={() => setSelectedYear(year)}
                 className={`px-4 py-2 text-sm rounded-lg font-medium transition-all ${selectedYear === year ? 'bg-emerald-700 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
               >
                 {year}
@@ -319,7 +322,7 @@ export default function InstitutionForecast() {
         </div>
 
         {filteredInstitutions.map(inst => {
-          const cfg = biasConfig[inst.bias];
+          const cfg = biasConfig[inst.bias as BiasKey];
           const Icon = cfg.icon;
           return (
             <div key={inst.id} className={`${cfg.bgColor} ${cfg.borderColor} border-2 rounded-xl p-5`}>
@@ -346,8 +349,8 @@ export default function InstitutionForecast() {
               </div>
 
               <div className="grid grid-cols-3 gap-4 mb-4">
-                {['2026', '2027', '2028'].map(year => {
-                  const forecast = inst.forecasts[year as '2026' | '2027' | '2028'];
+                {(['2026', '2027', '2028'] as ForecastYear[]).map(year => {
+                  const forecast = inst.forecasts[year];
                   return (
                     <div key={year} className="bg-white/70 rounded-lg p-3 border border-slate-200">
                       <div className="text-xs text-slate-500 mb-2 font-semibold">{year}</div>
